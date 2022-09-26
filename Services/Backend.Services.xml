@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Backend.Services</name>
+    </assembly>
+    <members>
+        <member name="T:Backend.Services.IDatabaseSqlDispatchProxy">
+            <summary>
+            有关数据库信息的Sql操作代理
+            </summary>
+        </member>
+        <member name="M:Backend.Services.IDatabaseSqlDispatchProxy.GetTables(System.String)">
+            <summary>
+            获取数据库表名
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Services.ModelTestFileService.GetFolderInfo(System.String)">
+            <summary>
+            获取存储机型Dll文件夹的文件信息
+            </summary>
+            <param name="path">机型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Services.MyDbContext.CreateAuditEntites(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry,Backend.Enties.User)">
+            <summary>
+            创建一个实体的多个审计操数据 (每条属性)
+            </summary>
+            <param name="entity"></param>
+            <param name="creator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Services.TestItemService.SetConfigOperator2Name(Backend.Enties.TestItem)">
+            <summary>
+            把配置符号添加到测试项目名称
+            </summary>
+            <param name="testItem"></param>
+        </member>
+        <member name="M:Backend.Services.UserPermissionService.GetCollection(Backend.Enties.UserPermission,Backend.Enties.Filte)">
+            <summary>
+            获取权限列表
+            </summary>
+            <param name="userPermission">实体过滤条件</param>
+            <param name="filte">分页过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Services.UserPermissionService.HasPermission(Backend.Enties.UserPermission)">
+            <summary>
+            检查是否有权限
+            </summary>
+            <param name="userPermission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Services.UserService.Md5(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            md5加密
+            </summary>
+            <param name="content">要加密的内容</param>
+            <param name="isUpper">是否大写，默认小写</param>
+            <param name="is16">是否是16位，默认32位</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

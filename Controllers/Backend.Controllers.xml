@@ -1,0 +1,710 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Backend.Controllers</name>
+    </assembly>
+    <members>
+        <member name="T:Backend.Controllers.v1.AuditController">
+            <summary>
+            审计日志
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v1.AuditController.GetList(Backend.Enties.Filte,Backend.Enties.Audit)">
+            <summary>
+            根据条件查询审计
+            </summary>
+            <param name="f">过滤条件</param>
+            <param name="a">审计条件</param>
+            <returns>PageList</returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelController.Add(Backend.Enties.Model)">
+            <summary>
+            添加机型
+            </summary>
+            <param name="m">机型</param>
+            <returns></returns> 
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelController.Delete(Backend.Enties.Model)">
+            <summary>
+            删除机型
+            </summary>
+            <param name="m">机型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelController.Get(System.String,System.Int32)">
+            <summary>
+            获取机型
+            </summary>
+            <param name="name">机型名称</param>
+            <param name="id">机型Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelController.GetList">
+            <summary>
+            获取被分配的机型列表（只有id和机型名称）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelController.Update(Backend.Enties.Model)">
+            <summary>
+            更新机型
+            </summary>
+            <param name="m">机型</param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v1.ModelPermissionController">
+            <summary>
+            机型权限 控制器/路由
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelPermissionController.Add(Backend.Enties.ModelPermission)">
+            <summary>
+            为某个用户分配对某个机型的权限
+            </summary>
+            <param name="modelPermission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelPermissionController.Delete(Backend.Enties.ModelPermission)">
+            <summary>
+            移除某个用户分配的某个机型的权限
+            </summary>
+            <param name="modelPermission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelPermissionController.Update(Backend.Enties.ModelPermission)">
+            <summary>
+            更新某个用户分配对某个机型的权限
+            </summary>
+            <param name="modelPermission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelPermissionController.GetCollection(System.Int32,Backend.Enties.Filte)">
+            <summary>
+            获取此用户分配给其他用户的机型权限列表
+            </summary>
+            <param name="userId">被分配用户Id</param>
+            <param name="filte">过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.ModelTestFileController.GetFileSystemInfos(System.String)">
+            <summary>
+            获取机型Dll文件夹下的数据
+            </summary>
+            <param name="modelId">机型ID</param>
+            <param name="modelName">机型名称</param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v1.PublicDllController">
+            <summary>
+            公共Dll，用于模板程序的插件
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllController.Add(Backend.Enties.PublicDll)">
+            <summary>
+            添加公共Dll
+            </summary>
+            <param name="dll"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllController.Delete(Backend.Enties.PublicDll)">
+            <summary>
+            删除公共Dll
+            </summary>
+            <param name="dll"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllController.Get(System.Int32)">
+            <summary>
+            获取单个公共Dll
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllController.GetList">
+            <summary>
+            获取所有公共的Dll
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllController.Update(Backend.Enties.PublicDll)">
+            <summary>
+            更新Dll
+            </summary>
+            <param name="dll"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v1.PublicDllFuncController">
+            <summary>
+            公共Dll方法
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllFuncController.Add(Backend.Enties.PublicDllFunc)">
+            <summary>
+            添加公共Dll方法
+            </summary>
+            <param name="dll"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllFuncController.Delete(Backend.Enties.PublicDllFunc)">
+            <summary>
+            删除公共Dll方法
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllFuncController.Get(System.Int32)">
+            <summary>
+            获取单个公共Dll方法
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllFuncController.GetList(System.Int32)">
+            <summary>
+            获取所有公共Dll的方法
+            </summary>
+            <param name="publicDllId">公共DllId</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.PublicDllFuncController.Update(Backend.Enties.PublicDllFunc)">
+            <summary>
+            更新公共Dll方法
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationController.Add(Backend.Enties.Station)">
+            <summary>
+            添加站别
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationController.Delete(Backend.Enties.Station)">
+            <summary>
+            删除站别
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationController.Get(System.Int32)">
+            <summary>
+            获取站别
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationController.GetList(System.Int32,System.String)">
+            <summary>
+            获取机型对应的站别
+            </summary>
+            <param name="modelId">机型ID</param>
+            <param name="modelName">机型名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationController.Update(Backend.Enties.Station)">
+            <summary>
+            更新站别
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationTestitemController.GetList(System.Int32,System.String,System.String)">
+            <summary>
+            获取站别对应的机型
+            </summary>
+            <param name="stationId">站别Id</param>
+            <param name="modelName">机型名称(可选)</param>
+            <param name="stationName">站别名称(如果添了机型名称，必选)</param>
+            <returns></returns> 
+        </member>
+        <member name="M:Backend.Controllers.v1.StationTestitemController.Add(Backend.Enties.StationTestItem)">
+            <summary>
+            给站别分配测试项目
+            </summary>
+            <param name="um"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationTestitemController.Delete(Backend.Enties.StationTestItem)">
+            <summary>
+            取消分配
+            </summary>
+            <param name="um"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationTestitemController.Update(Backend.Enties.StationTestItem)">
+            <summary>
+            更改某站别某测试项目的测试顺序
+            </summary>
+            <param name="um"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationTestitemController.ClearAll(Backend.Enties.Station)">
+            <summary>
+            清空某站别的分配
+            </summary>
+            <param name="station"></param> 
+            <returns>受影响行数</returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.StationTestitemController.Reallocate(System.Collections.Generic.List{Backend.Enties.StationTestItem})">
+            <summary>
+            从新分配测试项目
+            </summary>
+            <param name="stationTestitems"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.TestitemController.Add(Backend.Enties.TestItem)">
+            <summary>
+            添加测试项目
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.TestitemController.Delete(Backend.Enties.TestItem)">
+            <summary>
+            删除测试项目
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.TestitemController.Get(System.Int32)">
+            <summary>
+            获取测试项目
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.TestitemController.GetList(System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            获取机型总测试项目
+            或机型某站别分配的测试项目（如果填写了站别id且不等于0）
+            </summary>
+            <param name="modelId">机型ID</param>
+            <param name="stationId">站别ID</param>
+            <param name="modelName">机型名称</param>
+            <param name="stationName">站别名称</param>
+            <returns></returns>
+            TODO 可选参数配置
+        </member>
+        <member name="M:Backend.Controllers.v1.TestitemController.Update(Backend.Enties.TestItem)">
+            <summary>
+            更新测试项目
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.Register(Backend.Enties.User)">
+            <summary>
+            注册
+            </summary>
+            <param name="u">用户</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.Login(Backend.Enties.User)">
+            <summary>
+            登录
+            </summary>
+            <param name="u">用户</param>
+            <returns>用户信息</returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.Delete(Backend.Enties.User)">
+            <summary>
+            删除用户
+            </summary>
+            <param name="u"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.Get(System.Int32)">
+            <summary>
+            获取其他用户信息或自己的用户信息（如果未填用户id）
+            </summary>
+            <param name="id">用户id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.GetList(System.Int32,System.Int32)">
+            <summary>
+            获取用户信息列表
+            </summary>
+            <param name="page">页数</param>
+            <param name="size">大小</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.Update(Backend.Enties.User)">
+            <summary>
+            更新用户
+            </summary>
+            <param name="u">u</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.GetRoleList">
+            <summary>
+            获取权限列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.SetToken2Header(Backend.Enties.User)">
+            <summary>
+            创建token到响应头
+            </summary>
+            <param name="u"></param>
+            <returns>用户Token和刷新Token</returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.CreateUserInfo(Backend.Enties.User)">
+            <summary>
+            创建用户信息
+            </summary>
+            <param name="u"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v1.UserController.RequireValid(Backend.Enties.User)">
+            <summary>
+            必填检查
+            </summary>
+            <param name="u"></param>
+        </member>
+        <member name="T:Backend.Controllers.v2.AuditsController">
+            <summary>
+            审计
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.AuditsController.Get(Backend.Enties.Filte,Backend.Enties.Audit)">
+            <summary>
+            获取审计列表
+            </summary>
+            <param name="filte">分页过滤条件</param>
+            <param name="audit">审计过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v2.BackstageConfigurationsController">
+            <summary>
+            后台程序配置
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.BackstageConfigurationsController.Add(Backend.Enties.BackstageConfig)">
+            <summary>
+            添加后台程序配置
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.BackstageConfigurationsController.Delete(Backend.Enties.BackstageConfig)">
+            <summary>
+            删除后台程序配置
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.BackstageConfigurationsController.Get(System.String)">
+            <summary>
+            获取后台程序配置
+            </summary>
+            <param name="key">键</param>
+            <returns>机型/机型列表</returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.BackstageConfigurationsController.Update(Backend.Enties.BackstageConfig)">
+            <summary>
+            更新后台程序配置
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.BackstageConfigurationsController.GetKeys">
+            <summary>
+            获取配置键列表（key、label）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v2.ModelsController">
+            <summary>
+            机型
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.ModelsController.Add(Backend.Enties.Model)">
+            <summary>
+            添加机型
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.ModelsController.Delete(Backend.Enties.Model)">
+            <summary>
+            删除机型
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.ModelsController.Get(System.String)">
+            <summary>
+            获取机型
+            </summary>
+            <param name="modelUK">机型的名称或Id</param>
+            <returns>机型/机型列表</returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.ModelsController.Get(Backend.Enties.Filte)">
+            <summary>
+            获取（被分配的）机型列表
+            </summary>
+            <param name="filte">过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.ModelsController.Update(Backend.Enties.Model)">
+            <summary>
+            更新机型
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v2.StationsController">
+            <summary>
+            站别
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationsController.Add(System.Int32,Backend.Enties.Station)">
+            <summary>
+            添加站别
+            </summary>
+            <param name="modelId">所属机型Id</param>
+            <param name="s">站别</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationsController.Delete(System.Int32,Backend.Enties.Station)">
+            <summary>
+            删除站别
+            </summary>
+            <param name="modelId">所属机型Id</param>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationsController.GetCollection(System.String)">
+            <summary>
+            获取某机型的站别列表
+            </summary>
+            <param name="modelUk">机型的Id或名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationsController.Get(System.String,System.String)">
+            <summary>
+            获取某个机型的某个站别
+            </summary>
+            <param name="modelUk">机型名称或机型Id</param>
+            <param name="stationName">站别名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationsController.Get(System.String,System.Int32)">
+            <summary>
+            获取某个机型的某个站别
+            </summary>
+            <param name="modelUk">机型名称或机型Id</param>
+            <param name="stationId">站别Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationsController.Update(System.Int32,Backend.Enties.Station)">
+            <summary>
+            更新站别
+            </summary>
+            <param name="modelId">所属机型Id</param>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v2.StationTestItemsController">
+            <summary>
+            站别测试项目
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationTestItemsController.Add(System.Int32,Backend.Enties.StationTestItem)">
+            <summary>
+            给站别分配测试项目
+            </summary>
+            <param name="stationId">要分配的站别的Id</param>
+            <param name="testitemId">分配给站别的测试项目Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationTestItemsController.Delete(System.Int32,Backend.Enties.StationTestItem)">
+            <summary>
+            删除测试项目
+            </summary>
+            <param name="stationId">所属站别Id</param>
+            <param name="st">站别测试项目</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationTestItemsController.Update(System.Int32,Backend.Enties.StationTestItem)">
+            <summary>
+            更新站别测试项目
+            </summary>
+            <param name="stationId"></param>
+            <param name="st"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationTestItemsController.GetCollection(System.String,System.String)">
+            <summary>
+            获取测试项目列表
+            </summary>
+            <param name="modelUk">所属机型Id或名称</param>
+            <param name="stationUk">所属站别的Id或名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationTestItemsController.Distribute(System.Int32,System.Collections.Generic.List{Backend.Enties.StationTestItem})">
+            <summary>
+            重新分配测试项目
+            </summary>
+            <param name="stationId">站别Id</param>
+            <param name="newItems">新的测试项目列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.StationTestItemsController.ClearAll(System.Int32)">
+            <summary>
+            清空所有测试项目
+            </summary>
+            <param name="stationId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v2.TestItemsController">
+            <summary>
+            测试项目
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.TestItemsController.GetWhereUsed(System.Int32)">
+            <summary>
+            查询哪些站别使用了这一项
+            </summary>
+            <param name="testItemId">测试项目Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.TestItemsController.Add(System.Int32,Backend.Enties.TestItem)">
+            <summary>
+            添加测试项目
+            </summary>
+            <param name="modelId">所属机型Id</param>
+            <param name="t">站别</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.TestItemsController.Delete(System.Int32,Backend.Enties.TestItem)">
+            <summary>
+            删除测试项目
+            </summary>
+            <param name="t"></param>
+            <param name="modelId">所属机型Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.TestItemsController.Get(System.String,System.Int32,System.String)">
+            <summary>
+            搜索测试项目
+            </summary>
+            <param name="modelUk">所属机型的Id或名称</param>
+            <param name="stationId">指定某个站别下的测试项目</param>
+            <param name="keyWord">搜索关键字</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.TestItemsController.Update(System.Int32,Backend.Enties.TestItem)">
+            <summary>
+            更新测试项目
+            </summary>
+            <param name="modelId">所属机型Id</param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v2.UserPermissionsController">
+            <summary>
+            用户权限（对某表某实体的增删查改权限）
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.UserPermissionsController.GetCollection(Backend.Enties.UserPermission,Backend.Enties.Filte)">
+            <summary>
+            获取权限列表
+            </summary>
+            <param name="userPermission">实体过滤条件</param>
+            <param name="filte">分页过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UserPermissionsController.Add(System.Int32,Backend.Enties.UserPermission)">
+            <summary>
+            添加权限列表
+            </summary>
+            <param name="userId">用户Id(请正确填写)</param>
+            <param name="userPermission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UserPermissionsController.Delete(System.Int32,Backend.Enties.UserPermission)">
+            <summary>
+            删除权限
+            </summary>
+            <param name="userPermission"></param>
+            <param name="userId">用户Id(请正确填写)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UserPermissionsController.Update(System.Int32,Backend.Enties.UserPermission)">
+            <summary>
+            更新权限
+            </summary>
+            <param name="userPermission"></param>
+            <param name="userId">用户Id(请正确填写)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UserPermissionsController.GetTables">
+            <summary>
+            获取数据库表名
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Backend.Controllers.v2.UsersController">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.Add(Backend.Enties.User)">
+            <summary>
+            注册
+            </summary>
+            <param name="u">用户</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.Login(Backend.Enties.User)">
+            <summary>
+            登录
+            </summary>
+            <param name="u">用户</param>
+            <returns>token</returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.Delete(Backend.Enties.User)">
+            <summary>
+            删除用户
+            </summary>
+            <param name="u"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.GetInfo(System.String)">
+            <summary>
+            获取用户信息
+            </summary>
+            <param name="userUk">用户的Id或用户名，如果Id为0获取自己的</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.GetInfo(Backend.Enties.Filte)">
+            <summary>
+            获取用户信息列表
+            </summary>
+            <param name="filte">过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.Update(Backend.Enties.User)">
+            <summary>
+            更新用户
+            </summary>
+            <param name="u">u</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.GetRoleOptions">
+            <summary>
+            获取权限枚举
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.Controllers.v2.UsersController.SetToken2Header(Backend.Enties.User)">
+            <summary>
+            创建token到响应头
+            </summary>
+            <param name="u"></param>
+            <returns>用户Token和刷新Token</returns>
+        </member>
+    </members>
+</doc>

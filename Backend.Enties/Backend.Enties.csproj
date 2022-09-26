@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'==' Debug|AnyCPU'">
+    <DocumentationFile>E:\gitea\template-program-backend\Backend.Enties\Backend.Enties.xml</DocumentationFile>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentFTP" Version="34.0.1" />
+    <PackageReference Include="Furion" Version="2.18.0" />
+    <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="2.18.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Backend.Enties.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
