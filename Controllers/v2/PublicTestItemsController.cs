@@ -29,7 +29,7 @@ namespace Backend.Controllers.v2 {
         /// <param name="personRepository"></param>
         public PublicTestItemsController(IRepository<PublicTestItem> personRepository) {
             service = new PublicTestItemService(personRepository);
-            paramService = new PublicTestItemParamService(Db.GetRepository<PublicTestItemParam>());
+            paramService = new PublicTestItemParamService(Db.GetRepository<Enties.PublicTestItem.PublicTestItemParam>());
         }
 
         /// <summary>

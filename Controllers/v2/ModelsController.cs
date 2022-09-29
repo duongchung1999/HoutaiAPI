@@ -41,7 +41,6 @@ namespace Backend.Controllers.v2 {
             var nowUser = JwtHandler.GetNowUser();
             m.CreatorId = nowUser.Id;
             var result = await service.Add(m);
-
             return result.Entity;
         }
 
@@ -92,7 +91,9 @@ namespace Backend.Controllers.v2 {
         /// <returns></returns>
         public async Task<Model> Update(Model m) {
             var result = await service.Update(m);
-            return result.Entity;
+
+
+            return result;
         }
     }
 }

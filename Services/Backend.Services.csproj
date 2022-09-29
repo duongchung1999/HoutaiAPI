@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DiffMatchPatch" Version="1.0.3" />
     <PackageReference Include="FluentFTP" Version="34.0.1" />
     <PackageReference Include="Furion" Version="2.18.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />

@@ -25,7 +25,7 @@ namespace Backend.Services {
         /// <param name="methodId">通用测试项目的Id</param>
         /// <returns></returns>
         public async Task<List<PublicTestItemParam>> GetList(int methodId) {
-            var result = await repository.Where(e => e.MethodId == methodId).ToListAsync();
+            var result = await repository.Where(e => e.MethodId == methodId).OrderBy(e => e.Id).ToListAsync();
             return result;
         }
 

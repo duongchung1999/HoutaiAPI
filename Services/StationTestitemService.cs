@@ -94,6 +94,8 @@ namespace Backend.Services {
         }
 
         public async Task<List<StationTestItem>> Reallocate(List<StationTestItem> stationTestitems) {
+            var oldStationTestItems = await GetAll(stationTestitems[0].StationId);
+
             await Clear(stationTestitems[0].StationId);
 
             for (int i = 0; i < stationTestitems.Count; i++) {
@@ -105,7 +107,35 @@ namespace Backend.Services {
             }
 
             await repository.SaveNowAsync();
+
+            var oldText = await CreateActionRecordText(oldStationTestItems);
+            var newText = await CreateActionRecordText(stationTestitems);
+
+            var stationService = new StationService(Db.GetRepository<Station>());
+            var station = await stationService.Get(stationTestitems[0].StationId);
+            var modelName = await ModelService.GetModelNameById(station.ModelId);
+
+            await ActionRecordService.Add("分配测试项目", $"[{modelName} {station.Name}]\n {ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
+
             var result = await GetAll(stationTestitems[0].StationId);
+            return result;
+        }
+
+        /// <summary>
+        /// 获取操作记录文本
+        /// </summary>
+        /// <param name="stationTestItems"></param>
+        /// <returns></returns>
+        public async Task<string> CreateActionRecordText(List<StationTestItem> stationTestItems) {
+            var testItemService = new TestItemService(Db.GetRepository<TestItem>());
+            //var testItems = new List<TestItem>();
+            var result = "";
+
+            foreach (var st in stationTestItems) {
+                var testItem = await testItemService.Get(st.TestitemId);
+                //testItems.Add(testItem);
+                result += $"\n{testItem.Name}";
+            }
             return result;
         }
     }

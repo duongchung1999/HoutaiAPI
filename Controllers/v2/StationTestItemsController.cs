@@ -113,7 +113,10 @@ namespace Backend.Controllers.v2 {
         [Authorize]
         public async Task<List<StationTestItem>?> Distribute(int stationId, List<StationTestItem>? newItems) {
             if (newItems == null) return null;
+
             var oldItems = await service.GetCollection(stationId);
+
+            var oldText = await service.CreateActionRecordText(oldItems);
 
             for (int i = 0; i < newItems.Count(); i++) {
                 newItems[i].Id = 0;
@@ -122,6 +125,13 @@ namespace Backend.Controllers.v2 {
             await repository.Context.DeleteRangeAsync<StationTestItem>(e => e.StationId == stationId);
             await repository.Context.BulkInsertAsync(newItems);
 
+            var newText = await service.CreateActionRecordText(newItems);
+
+            var stationService = new StationService(Db.GetRepository<Station>());
+            var station = await stationService.Get(stationId);
+            var modelName = await ModelService.GetModelNameById(station.ModelId);
+
+            await ActionRecordService.Add("分配测试项目", $"[{modelName} {station.Name}]\n {ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
 
             await repository.SaveNowAsync();
             return await service.GetCollection(stationId);

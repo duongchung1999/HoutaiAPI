@@ -87,7 +87,7 @@ namespace Utils {
                 RequestDate = DateTime.Now,
                 Result = JsonConvert.SerializeObject(returnResult, jsonSerializeSetting)
             };
-            await repository.InsertNowAsync(log);
+            //await repository.InsertNowAsync(log);
         }
     }
 }

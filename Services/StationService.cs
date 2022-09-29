@@ -20,15 +20,41 @@ namespace Backend.Services {
         }
 
         public async Task<EntityEntry<Station>> Add(Station s) {
-            return await s.InsertNowAsync();
+            var result = await s.InsertNowAsync();
+            var model = await modelService.Get(s.ModelId);
+            await ActionRecordService.Add(ActionRecord.ActionOptions.ADD_STATION, $"[{model.Name}] {ActionRecordService.CreateDiffTextStyle("", s.Name)}" );
+
+            return result;
         }
 
         public async Task<EntityEntry<Station>> Delete(Station s) {
-            return await s.DeleteNowAsync();
+            var result = await s.DeleteNowAsync();
+
+            var model = await modelService.Get(s.ModelId);
+            await ActionRecordService.Add(ActionRecord.ActionOptions.DELETE_STATION, $"[{model.Name}] {ActionRecordService.CreateDiffTextStyle(s.Name, "")}");
+
+            return result;
         }
 
         public async Task<EntityEntry<Station>> UpdateStation(Station s) {
-            return await s.UpdateNowAsync();
+            var entry = repository.Attach(s);
+
+            var oldStation = await entry.GetDatabaseValuesAsync();
+            var oldStationName = oldStation["Name"].ToString();
+            var oldStationConfig = oldStation["Config"]?.ToString();
+            var result = await s.UpdateNowAsync();
+
+            var model = await modelService.Get(s.ModelId);
+
+            if (oldStationName != s.Name) {
+                await ActionRecordService.Add("更新站别名称", $"[{model.Name}] {ActionRecordService.CreateDiffTextStyle(oldStationName, s.Name)}");
+            }
+
+            if (oldStationConfig != s.Config) {
+                await ActionRecordService.Add("更新站别配置", $"[{model.Name}] {ActionRecordService.CreateDiffTextStyle(oldStationConfig, s.Config)}");
+            }
+
+            return result;
         }
 
         public async Task<Station> Get(int stationId) {
@@ -55,7 +81,7 @@ namespace Backend.Services {
             if (model is null) {
                 return null;
             }
-            return  await GetCollection(model.Id);
+            return await GetCollection(model.Id);
         }
 
         public List<Station> GetAllStation(int modelId = 0, string modelName = null) {

@@ -27,7 +27,6 @@ namespace Backend.Services {
             if (!JwtHandler.HasRoles(UserRoleOptions.ADMIN, false)) {
                 query = query.Where(e => e.Path != "api/v2/users" && !e.Path.Contains("api/v2/users/"));
             }
-            
 
             if (requestUserId != 0) query = query.Where(e => e.RequestUserId == requestUserId);
 

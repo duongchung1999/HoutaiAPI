@@ -25,11 +25,22 @@ namespace Backend.Services {
 
         public async Task<EntityEntry<TestItem>> AddTestitem(TestItem t) {
             SetConfigOperator2Name(t);
-            return await t.InsertNowAsync();
+            var result = await t.InsertNowAsync();
+
+            var modelName = await ModelService.GetModelNameById(t.ModelId);
+            var newText = CreateActionRecordText(t);
+            await ActionRecordService.Add("添加测试项目", $"[{modelName}]\n{ActionRecordService.CreateDiffTextStyle("", newText)}");
+            return result;
         }
             
         public async Task<EntityEntry<TestItem>> DeleteTestitem(TestItem t) {
-            return await t.DeleteNowAsync();
+            var result = await t.DeleteNowAsync();
+
+            var modelName = await ModelService.GetModelNameById(t.ModelId);
+            var oldText = CreateActionRecordText(t);
+            await ActionRecordService.Add("删除测试项目", $"[{modelName}]\n{ActionRecordService.CreateDiffTextStyle(oldText, "")}");
+
+            return result;
         }
 
         public async Task<EntityEntry<TestItem>> UpdateTestitem(TestItem t) {
@@ -38,8 +49,18 @@ namespace Backend.Services {
             if (string.IsNullOrEmpty(t.Name)) UnUpdateFields.Add("Name");
             if (string.IsNullOrEmpty(t.Cmd)) UnUpdateFields.Add("Cmd");
 
+            var entry =  repository.Attach(t);
+            var oldValue = await entry.GetDatabaseValuesAsync();
+            var oldText = CreateActionRecordText(oldValue);
+            var modelName = await ModelService.GetModelNameById(t.ModelId);
+
+            var result = await t.UpdateExcludeNowAsync(UnUpdateFields);
             SetConfigOperator2Name(t);
-            return await t.UpdateExcludeNowAsync(UnUpdateFields);
+
+            var newText = CreateActionRecordText(t);
+            await ActionRecordService.Add("更新测试项目", $"[{modelName}]\n{ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
+
+            return result;
         }
 
         public async Task<TestItem> GetTestitem(int id) {
@@ -105,6 +126,10 @@ namespace Backend.Services {
             return await GetCollection(model.Id, stationId, keyWord);
         }
 
+        public async Task<TestItem> Get(int testItemId) {
+            return await repository.FindOrDefaultAsync(testItemId);
+        }
+
         /// <summary>
         /// 把配置符号添加到测试项目名称
         /// </summary>
@@ -125,6 +150,14 @@ namespace Backend.Services {
             if (!testItem.IsHidden && testItem.Name.Contains("-")) {
                 testItem.Name = testItem.Name.Replace("-", "");
             }
+        }
+    
+        string CreateActionRecordText(TestItem testItem) {
+            return $"项目名称：{testItem.Name}\n调用命令：{testItem.Cmd}\n上限：{testItem.LowerValue}\n下限：{testItem.UpperValue}\n单位：{testItem.Unit}\n比对编号：{testItem.No}\n隐藏此项：{testItem.IsHidden}\n始终执行：{testItem.IsAlwaysRun}";
+        }
+
+        string CreateActionRecordText(PropertyValues pvs) {
+            return $"项目名称：{pvs["Name"]}\n调用命令：{pvs["Cmd"]}\n上限：{pvs["LowerValue"]}\n下限：{pvs["UpperValue"]}\n单位：{pvs["Unit"]}\n比对编号：{pvs["No"]}\n隐藏此项：{pvs["IsHidden"]}\n始终执行：{pvs["IsAlwaysRun"]}";
         }
     }
 }
