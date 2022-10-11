@@ -1,6 +1,7 @@
 ﻿using Backend.Enties;
 using Furion.DatabaseAccessor;
 using Furion.DatabaseAccessor.Extensions;
+using Furion.JsonSerialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -80,6 +81,25 @@ namespace Backend.Services {
             var result = await repository
                 .Where(st => st.StationId == stationId)
                 .Include(st => st.TestItem)
+                .Select(e => new StationTestItem() {
+                    Id = e.Id,
+                    StationId = e.StationId,
+                    SortIndex = e.SortIndex,
+                    TestitemId = e.TestitemId,
+                    TestItem = new TestItem() { 
+                        Id = e.TestItem.Id,
+                        Name = e.TestItem.Name,
+                        UpperValue = e.TestItem.UpperValue,
+                        LowerValue = e.TestItem.LowerValue,
+                        Unit = e.TestItem.Unit,
+                        Cmd = e.TestItem.Cmd,
+                        No = e.TestItem.No,
+                        ModelId = e.TestItem.ModelId,
+                        IsAlwaysRun = e.TestItem.IsAlwaysRun,
+                        IsHidden = e.TestItem.IsHidden,
+
+                    }
+                })
                 .OrderBy(e => e.SortIndex)
                 .ToListAsync();
             return result;
@@ -118,6 +138,7 @@ namespace Backend.Services {
             await ActionRecordService.Add("分配测试项目", $"[{modelName} {station.Name}]\n {ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
 
             var result = await GetAll(stationTestitems[0].StationId);
+
             return result;
         }
 

@@ -25,7 +25,7 @@ namespace Backend.Services {
         /// <param name="methodId">通用测试项目的Id</param>
         /// <returns></returns>
         public async Task<List<PublicTestItemParam>> GetList(int methodId) {
-            var result = await repository.Where(e => e.MethodId == methodId).OrderBy(e => e.Id).ToListAsync();
+            var result = await repository.Where(e => e.MethodId == methodId).OrderBy(e => e.SortIndex).ToListAsync();
             return result;
         }
 
@@ -52,9 +52,11 @@ namespace Backend.Services {
             await Clear(methodId);
             if (publicTestItemParams == null) return new List<PublicTestItemParam>();
 
+            var i = 0;
             foreach (var item in publicTestItemParams) {
                 item.MethodId = methodId;
-                await item.InsertAsync(); 
+                item.SortIndex = i++;
+                await item.InsertAsync();
             }
             await repository.SaveNowAsync();
 

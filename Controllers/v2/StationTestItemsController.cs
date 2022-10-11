@@ -7,6 +7,7 @@ using Furion.DynamicApiController;
 using Furion.FriendlyException;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Backend.Controllers.v2 {
         StationTestitemService service;
         StationService stationService;
         ModelService modelService;
-
 
         public StationTestItemsController(IRepository<StationTestItem> personRepository) {
             repository = personRepository;
@@ -102,7 +102,7 @@ namespace Backend.Controllers.v2 {
 
             return await service.GetCollection(station.Id);
         }
-
+         
         /// <summary>
         /// 重新分配测试项目
         /// </summary>
@@ -118,7 +118,7 @@ namespace Backend.Controllers.v2 {
 
             var oldText = await service.CreateActionRecordText(oldItems);
 
-            for (int i = 0; i < newItems.Count(); i++) {
+            for (int i = 0; i < newItems.Count; i++) {
                 newItems[i].Id = 0;
                 newItems[i].SortIndex = i + 1;
             }
@@ -131,10 +131,13 @@ namespace Backend.Controllers.v2 {
             var station = await stationService.Get(stationId);
             var modelName = await ModelService.GetModelNameById(station.ModelId);
 
-            await ActionRecordService.Add("分配测试项目", $"[{modelName} {station.Name}]\n {ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
+            ActionRecordService.Add("分配测试项目", $"[{modelName} {station.Name}]\n {ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
 
             await repository.SaveNowAsync();
-            return await service.GetCollection(stationId);
+            
+            var result = await service.GetCollection(stationId);
+
+            return result;
         }
 
         /// <summary>

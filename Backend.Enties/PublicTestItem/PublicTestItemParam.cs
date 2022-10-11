@@ -19,6 +19,12 @@ namespace Backend.Enties.PublicTestItem {
         public int Id { get; set; }
 
         /// <summary>
+        /// 参数顺序
+        /// </summary>
+        [Column("sort_index")]
+        public int SortIndex { get; set; }
+
+        /// <summary>
         /// 概述
         /// </summary>
         public string Summary { get; set; }

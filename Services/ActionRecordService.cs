@@ -18,31 +18,6 @@ namespace Backend.Services {
     public class ActionRecordService {
         private readonly IRepository<ActionRecord> repository;
 
-        /// <summary>
-        /// 操作记录搜索选项
-        /// </summary>
-        public class SearchOptions {
-            /// <summary>
-            /// 搜索关键词
-            /// </summary>
-            public string? Keywords;
-
-            /// <summary>
-            /// 起始时间
-            /// </summary>
-            public DateTime? StartDate;
-
-            /// <summary>
-            /// 结束时间
-            /// </summary>
-            public DateTime? EndDate;
-
-            /// <summary>
-            /// 操作者
-            /// </summary>
-            public string? Operator;
-        }
-
         public ActionRecordService(IRepository<ActionRecord> personRepository) {
             repository = personRepository;
         }
@@ -52,9 +27,11 @@ namespace Backend.Services {
         /// </summary>
         /// <param name="actionRecord"></param>
         /// <returns></returns>
-        static async Task<ActionRecord> Add(ActionRecord actionRecord) {
-            await actionRecord.InsertNowAsync();
-            return actionRecord;
+        static async Task Add(ActionRecord actionRecord) {
+            Task.Run(async () => {
+                await actionRecord.InsertNowAsync();
+            });
+            //return actionRecord;
         }
 
         /// <summary>

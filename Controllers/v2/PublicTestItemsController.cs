@@ -49,7 +49,9 @@ namespace Backend.Controllers.v2 {
         /// <returns>添加后的通用测试项目列表</returns>
         public async Task<List<PublicTestItem>> Reallocate(int groupId, List<PublicTestItem> publicTestItems) {
             var pTestItems = await service.Reallocate(groupId, publicTestItems);
+
             foreach (var item in pTestItems) {
+
                 //更新测试项目的参数
                 await paramService.Reallocate(item.Id, item.Params);
             }
