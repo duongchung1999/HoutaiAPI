@@ -24,11 +24,14 @@ namespace Backend.Controllers.v2 {
 
         private readonly IRepository<Model> repository;
         private readonly ModelService service;
-        private readonly UserService userService;
+        private readonly UserService userService;  
+        DynamicCodeService dynamicCodeService;
+        
         public ModelsController(IRepository<Model> personRepository) {
             repository = personRepository;
             service = new ModelService(repository);
             userService = new UserService(Db.GetRepository<User>());
+            dynamicCodeService = new DynamicCodeService(Db.GetRepository<DynamicCode>());
         }
 
         /// <summary>
@@ -60,11 +63,16 @@ namespace Backend.Controllers.v2 {
         /// <param name="modelUK">机型的名称或Id</param>
         /// <returns>机型/机型列表</returns>
         public async Task<Model> Get(string? modelUK) {
+            Model result = null;
             if (int.TryParse(modelUK, out int modelId)) {
-                return await service.Get(modelId);
+                result = await service.Get(modelId);
+            } else {
+                result = await service.Get(modelUK);
             }
 
-            return await service.Get(modelUK);
+            result.DynamicCode = await dynamicCodeService.GetByModelId(result.Id);
+
+            return result;
         }
 
         /// <summary>
@@ -81,7 +89,11 @@ namespace Backend.Controllers.v2 {
 
             var user = await userService.Get(userId);
 
-            return await service.GetCollection(user);
+            var result = await service.GetCollection(user);
+            foreach (var item in result) {
+                item.DynamicCode = await dynamicCodeService.GetByModelId(item.Id);
+            }
+            return result;
         }
 
         /// <summary>
@@ -92,7 +104,7 @@ namespace Backend.Controllers.v2 {
         public async Task<Model> Update(Model m) {
             var result = await service.Update(m);
 
-
+            result.DynamicCode = await dynamicCodeService.GetByModelId(result.Id);
             return result;
         }
     }

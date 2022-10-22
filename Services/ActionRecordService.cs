@@ -28,9 +28,7 @@ namespace Backend.Services {
         /// <param name="actionRecord"></param>
         /// <returns></returns>
         static async Task Add(ActionRecord actionRecord) {
-            Task.Run(async () => {
                 await actionRecord.InsertNowAsync();
-            });
             //return actionRecord;
         }
 

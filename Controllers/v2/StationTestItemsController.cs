@@ -131,7 +131,7 @@ namespace Backend.Controllers.v2 {
             var station = await stationService.Get(stationId);
             var modelName = await ModelService.GetModelNameById(station.ModelId);
 
-            ActionRecordService.Add("分配测试项目", $"[{modelName} {station.Name}]\n {ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
+           await ActionRecordService.Add("分配测试项目", $"[{modelName} {station.Name}]\n {ActionRecordService.CreateDiffTextStyle(oldText, newText)}");
 
             await repository.SaveNowAsync();
             

@@ -13,10 +13,12 @@ namespace Backend.Services {
 
         private readonly IRepository<Model> repository;
         UserModelService UserModelService;
+        //DynamicCodeService dynamicCodeService;
 
         public ModelService(IRepository<Model> personRepository) {
             repository = personRepository;
             UserModelService = new UserModelService(Db.GetRepository<UserModel>());
+            //dynamicCodeService = new DynamicCodeService(Db.GetRepository<DynamicCode>());
         }
 
         public async Task<EntityEntry<Model>> Add(Model m) {
@@ -34,9 +36,14 @@ namespace Backend.Services {
         }
 
         public async Task<Model> Get(string modelName) {
-            return await repository.Entities.AsNoTracking().SingleOrDefaultAsync(e => e.Name.Equals(modelName));
-        }
+            var reuslt = await repository.Entities.AsNoTracking().SingleOrDefaultAsync(e => e.Name.Equals(modelName));
 
+            //var dynamicCode = dynamicCodeService.GetByModelId(reuslt.Id);
+            //reuslt.
+
+            return reuslt;
+        }
+        
         public async Task<Model> Get(int id = 0) {
             return await repository.FindOrDefaultAsync(id);
         }

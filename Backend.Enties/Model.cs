@@ -40,6 +40,15 @@ namespace Backend.Enties {
         [Column("pn_config_template")]
         public string PnConfigTemplate { get; set; }
 
+        /// <summary>
+        /// 动态码Id
+        /// </summary>
+        //[Column("dynamic_code_id")]
+        //public int DynamicCodeId { get; set; }
+
+        [NotMapped]
+        public DynamicCode DynamicCode { get; set; }
+
         public void Configure(EntityTypeBuilder<Model> entityBuilder, DbContext dbContext, Type dbContextLocator) {
             entityBuilder.HasKey(e => e.Id);
         }

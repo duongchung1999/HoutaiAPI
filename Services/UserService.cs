@@ -13,9 +13,11 @@ using System.Threading.Tasks;
 namespace Backend.Services {
     public class UserService {
         private readonly IRepository<User> repository;
+        RoleService roleService;
 
         public UserService(IRepository<User> personRepository) {
             repository = personRepository;
+            roleService = new RoleService(Db.GetRepository<Role>());
         }
 
         public async Task<User> Add(User u) {
@@ -33,10 +35,14 @@ namespace Backend.Services {
         public async Task<User> Get(int id) {
             var result = await repository.FindOrDefaultAsync(id);
             if (result == null) return null;
+            
+            var role = await roleService.GetById(result.RoleId);
+
             return new User() {
                 Id = result.Id,
                 Nickname = result.Nickname,
-                Role = result.Role
+                Role = result.Role,
+                PermissionRole = role
             };
         }
 

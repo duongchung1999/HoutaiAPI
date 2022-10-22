@@ -21,15 +21,15 @@ namespace Utils {
         /// sql索引异常信息
         /// </summary>
         static readonly Dictionary<string, string> SqlErrorDict = new() {
-             { "IX_User_Username_Uk", "账号已被注册"},
-             { "IX_User_Nickname_Uk", "昵称已被使用"},
+            { "IX_User_Username_Uk", "账号已被注册"},
+            { "IX_User_Nickname_Uk", "昵称已被使用"},
 
-             { "IX_Model_Name_Uk", "机型名称已被使用"},
+            { "IX_Model_Name_Uk", "机型名称已被使用"},
 
-             { "IX_Station_Name_ModelId_Uk", "已有此站别"},
+            { "IX_Station_Name_ModelId_Uk", "已有此站别"},
 
-             { "IX_Testitem_ModelId_Name_Uk", "已有这个测试名称"},
-             { "IX_Testitem_ModelId_Cmd_Uk", "已有这个调用命令"},
+            { "IX_Testitem_ModelId_Name_Uk", "已有这个测试名称"},
+            { "IX_Testitem_ModelId_Cmd_Uk", "已有这个调用命令"},
 
             { "IX_StationTestitem_StationId_TestitemId_Uk", "测试项目重复"},
             { "IX_StationTestitem_StationId_SortIndex_Uk", "测试顺序重复"},
@@ -53,6 +53,7 @@ namespace Utils {
 
             { "PublicTestItemGroup_DllName_Uk", "已经有这个dllname的通用测试项目组了" },
             { "PublicTestItemGroup_Summary_Uk", "已经有这个概述的通用测试项目组了" },
+            { "Role_Name_UK", "角色名称重复" }
         };
 
         /// <summary>

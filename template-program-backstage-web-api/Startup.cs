@@ -24,6 +24,8 @@ namespace template_program_backstage_web_api {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            // 注册辅助角色（定时清除过期动态码）
+            services.AddHostedService<DynamicCodeBackgroundService>();
             //启用JWT
             //services
             //    .AddAuthentication(Options => {
@@ -85,6 +87,7 @@ namespace template_program_backstage_web_api {
             services.AddVirtualFileServer();
 
             services.AddMvcFilter<RequestLogFilter>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -52,6 +52,15 @@ namespace Backend.Enties {
         [Column("user_role")]
         public UserRoleOptions Role { get; set; }
 
+        [Column("role_id")]
+        public int RoleId { get; set; }
+
+        /// <summary>
+        /// 所属的权限角色
+        /// </summary>
+        [NotMapped]
+        public Role PermissionRole { get; set; }
+
         /// <summary>
         /// 机型权限列表
         /// </summary>
@@ -61,7 +70,7 @@ namespace Backend.Enties {
             entityBuilder.HasKey(e => e.Id);
             //entityBuilder.HasMany(e => e.ModelPermissions).WithOne(e => e.User).HasForeignKey(e => e.UserId);
             entityBuilder.Property(e => e.Role)
-                .HasConversion(v => (int)v, v =>  (UserRoleOptions)v);
+                .HasConversion(v => (int)v, v => (UserRoleOptions)v);
         }
     }
 }
