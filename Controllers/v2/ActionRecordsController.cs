@@ -22,7 +22,7 @@ namespace Backend.Controllers.v2 {
         private readonly IRepository<ActionRecord> repository;
 
         ActionRecordService service;
-
+        
         public ActionRecordsController(IRepository<ActionRecord> personRepository) {
             repository = personRepository;
             service = new ActionRecordService(repository);

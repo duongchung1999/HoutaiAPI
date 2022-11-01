@@ -30,6 +30,7 @@ namespace Backend.Enties {
         /// Id
         /// </summary>
         public int Id { get; set; }
+        
         /// <summary>
         /// 昵称
         /// </summary>

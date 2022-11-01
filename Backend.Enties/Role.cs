@@ -6,6 +6,39 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Enties {
+    
+    /// <summary>
+    /// 权限角色选项
+    /// </summary>
+    public enum PermissionRoleOptions {
+        /// <summary>
+        /// 管理员
+        /// </summary>
+        ADMIN = 8,
+        /// <summary>
+        /// 账号管理员
+        /// </summary>
+        ACCOUNT_MANAGER = 7,
+        /// <summary>
+        /// 软体
+        /// </summary>
+        SW = 5,
+        /// <summary>
+        /// EE、PE、HW
+        /// </summary>
+        TE = 4,
+        /// <summary>
+        /// 模板程序开发者
+        /// </summary>
+        TEMPLATE_PROGRAM_DEVELOPER = 2,
+        /// <summary>
+        /// 基础权限
+        /// </summary>
+        BASC = 1,
+    }
+}
+    
+    
     /// <summary>
     /// 机型
     /// </summary>
@@ -27,5 +60,5 @@ namespace Backend.Enties {
         public void Configure(EntityTypeBuilder<Role> entityBuilder, DbContext dbContext, Type dbContextLocator) {
             entityBuilder.HasKey(e => e.Id);
         }
-    }
+    
 }

@@ -37,7 +37,9 @@ namespace Backend.Enties {
         /// </summary>
         [Column("model_id")]
         public int ModelId { get; set; }
-
+        
+        [Column("model_name")]
+        public string ModelName { get; set; }
 
         public void Configure(EntityTypeBuilder<DynamicCode> entityBuilder, DbContext dbContext, Type dbContextLocator) {
             entityBuilder.HasKey(e => e.Id);

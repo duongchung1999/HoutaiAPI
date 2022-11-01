@@ -22,27 +22,32 @@ namespace Backend.Services {
 
         public async Task<User> Add(User u) {
             u.Password = Md5(u.Password);
-            var result = await u.InsertNowAsync();
-            return result.Entity;
+            await u.InsertNowAsync();
+
+            var role = await roleService.GetById(u.RoleId);
+            u.Password = "";
+            u.PermissionRole = role;
+            return u;
         }
 
         public async Task<User> Login(User u) {
             var pwd = Md5(u.Password);
-            var result = await repository.FirstOrDefaultAsync(e =>  e.Username == (u.Username) && e.Password.Equals(pwd));
+            var result = await repository.FirstOrDefaultAsync(e => e.Username == (u.Username) && e.Password.Equals(pwd));
             return result;
         }
 
         public async Task<User> Get(int id) {
             var result = await repository.FindOrDefaultAsync(id);
             if (result == null) return null;
-            
+
             var role = await roleService.GetById(result.RoleId);
 
             return new User() {
                 Id = result.Id,
                 Nickname = result.Nickname,
                 Role = result.Role,
-                PermissionRole = role
+                PermissionRole = role,
+                RoleId = result.RoleId,
             };
         }
 
@@ -61,14 +66,22 @@ namespace Backend.Services {
         }
 
         public async Task<PagedList<User>> GetInfoCollection(Filte? filte) {
-            return await repository.Entities
-                .Select(e => new User { 
+            var users = await repository.Entities
+                .Select(e => new User {
                     Username = e.Username,
                     Id = e.Id,
                     Nickname = e.Nickname,
-                    Role = e.Role
+                    Role = e.Role,
+                    RoleId = e.RoleId,
                 })
                 .ToPagedListAsync(filte.Page, filte.Size);
+
+            foreach (var u in users.Items) {
+                var role = await roleService.GetById(u.RoleId);
+                u.PermissionRole = role;
+            }
+
+            return users;
         }
 
         public async Task<User> UpdateUser(User u) {
@@ -78,8 +91,14 @@ namespace Backend.Services {
                 excludeFields.Add("Password");
             }
             u.Password = Md5(u.Password);
-            var result = await u.UpdateExcludeAsync(excludeFields);
-            return result.Entity;
+            await u.UpdateExcludeNowAsync(excludeFields);
+            var role = await roleService.GetById(u.RoleId);
+
+            // 取消附加实体，防止下面两行更改到数据库
+            repository.Detach(u);
+            u.Password = "";
+            u.PermissionRole = role;
+            return u;
         }
 
         /// <summary>

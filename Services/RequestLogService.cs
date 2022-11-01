@@ -24,7 +24,10 @@ namespace Backend.Services {
         public  async Task<PagedList<RequestLog>> GetList(int requestUserId, string path, string method, string ketWord, DateTime? startDate, DateTime? endDate, int page, int pageSize) {
             var query = repository.AsQueryable(false);
 
-            if (!JwtHandler.HasRoles(UserRoleOptions.ADMIN, false)) {
+            //if (!JwtHandler.HasRoles(UserRoleOptions.ADMIN, false)) {
+            //    query = query.Where(e => e.Path != "api/v2/users" && !e.Path.Contains("api/v2/users/"));
+            //}
+            if (!JwtHandler.ValidateRoles(PermissionRoleOptions.ADMIN, false)) {
                 query = query.Where(e => e.Path != "api/v2/users" && !e.Path.Contains("api/v2/users/"));
             }
 

@@ -1,14 +1,10 @@
 ﻿# nullable enable
 using Backend.Enties;
 using Backend.Services;
-using Furion.ClayObject;
 using Furion.DatabaseAccessor;
-using Furion.DatabaseAccessor.Extensions;
 using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Backend.Controllers.v2 {
@@ -17,10 +13,10 @@ namespace Backend.Controllers.v2 {
     /// </summary>
     [ApiDescriptionSettings("Version2@2")]
     [Route("api/v2/[controller]")]
-    public class AuditsController : IDynamicApiController {
+     class AuditsController : IDynamicApiController {
 
         private readonly IRepository<Audit> repository;
-        private readonly AuditService service;
+        private readonly AuditService service; 
 
         public AuditsController(IRepository<Audit> personRepository) {
             repository = personRepository;

@@ -18,7 +18,7 @@ namespace Backend.Controllers.v2 {
     /// </summary>
     [ApiDescriptionSettings("Version2@2")]
     [Route("api/v2/[controller]")]
-    public class RequestLogsController : IDynamicApiController {
+     class RequestLogsController : IDynamicApiController {
 
         private readonly IRepository<RequestLog> repository;
         RequestLogService requestLogService;

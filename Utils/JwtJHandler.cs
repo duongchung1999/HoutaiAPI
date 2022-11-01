@@ -42,11 +42,15 @@ namespace Utils {
             var id = App.User?.FindFirstValue("UserId");
             var nickname = App.User?.FindFirstValue("UserNickname");
             var role = App.User?.FindFirstValue("userRole");
+            var userLevel = App.User?.FindFirstValue("userLevel");
 
             return new User() {
                 Id = Convert.ToInt32(id),
                 Nickname = nickname is null ? "" : nickname,
                 Role = (UserRoleOptions)(role is null ? UserRoleOptions.NONE : Enum.ToObject(typeof(UserRoleOptions), Convert.ToInt32(role))),
+                PermissionRole = new Role() {
+                    Level = Convert.ToInt32(userLevel)
+                }
             };
         }
 
@@ -64,9 +68,9 @@ namespace Utils {
         /// </summary>
         /// <param name="validateRole"></param>
         /// <param name="isThrowError">是否抛出异常</param>
+        [Obsolete("导入权限角色管理后废弃")]
         public static bool ValidateRoles(UserRoleOptions validateRole, bool isThrowError = true) {
             var nowUser = GetNowUser();
-
 
             if ((nowUser.Role & validateRole) == 0) {
                 if (isThrowError) {
@@ -78,16 +82,23 @@ namespace Utils {
             return true;
         }
 
-        public static bool ValidateRoles(string validateRole, bool isThrowError = true) {
-            try {
-                var vr = Enum.Parse<UserRoleOptions>(validateRole);
-                return ValidateRoles(vr, isThrowError);
-            } catch (Exception) {
+        /// <summary>
+        /// 校验当前账号是否有权限（2022.11.1之后的版本）
+        /// </summary>
+        /// <param name="permissionRole"></param>
+        /// <param name="isThrowError"></param>
+        /// <returns></returns>
+        public static bool ValidateRoles(PermissionRoleOptions permissionRole, bool isThrowError = true) {
+            var nowUser = GetNowUser();
+
+            if ((nowUser.PermissionRole.Level == Convert.ToInt32(permissionRole))) {
                 if (isThrowError) {
-                    throw;
+                    App.HttpContext.Response.StatusCode = 403;
+                    throw Oops.Oh("权限不足");
                 }
+                return false;
             }
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -118,13 +129,26 @@ namespace Utils {
             return Task.FromResult(true);
         }
 
+        
         /// <summary>
         /// 校验当前用户角色是否有权限
         /// </summary>
         /// <param name="validateRole"></param>
         /// <param name="isThrowError">是否抛出异常</param>
+        [Obsolete("导入权限角色管理后废弃")]
         public static bool HasRoles(UserRoleOptions validateRole, bool isThrowError = true) {
             return ValidateRoles(validateRole, isThrowError);
         }
+
+        /*
+         export enum PermissionRoleOptions {
+    ADMIN = 8,
+    ACCOUNT_MANAGER = 7,
+    SW = 5,
+    TE = 4,
+        TEMPLATE_PROGRAM_DEVELOPER = 2,
+    BASC = 1,
+}
+         */
     }
 }

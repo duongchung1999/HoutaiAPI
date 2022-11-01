@@ -22,7 +22,7 @@ namespace Backend.Controllers.v2 {
     /// </summary>
     [ApiDescriptionSettings("Version2@2")]
     [Route("api/v2/[controller]")]
-     public class UsersController : IDynamicApiController {
+    public class UsersController : IDynamicApiController {
         private readonly IRepository<User> repository;
         private readonly UserService service;
 
@@ -70,7 +70,8 @@ namespace Backend.Controllers.v2 {
         /// <returns></returns> 
         [Authorize]
         public async Task<User?> Delete(User u) {
-            JwtHandler.ValidateRoles(UserRoleOptions.ADMIN);
+            JwtHandler.ValidateRoles(PermissionRoleOptions.ADMIN);
+            //JwtHandler.ValidateRoles(UserRoleOptions.ADMIN);
             await service.DeleteUser(u);
             return null;
         }
@@ -100,7 +101,9 @@ namespace Backend.Controllers.v2 {
         /// <returns></returns>
         [Authorize]
         public async Task<PagedList<User>> GetInfo([FromQuery] Filte? filte) {
-            return await service.GetInfoCollection(filte);
+            var users = await service.GetInfoCollection(filte);
+
+            return users;
         }
 
         /// <summary>
@@ -110,7 +113,8 @@ namespace Backend.Controllers.v2 {
         /// <returns></returns>
         [Authorize]
         public async Task<User> Update(User u) {
-            JwtHandler.HasRoles(UserRoleOptions.ADMIN);
+            //JwtHandler.HasRoles(UserRoleOptions.ADMIN);
+            JwtHandler.ValidateRoles(PermissionRoleOptions.ADMIN);
             var result = await service.UpdateUser(u);
             return result;
         }
@@ -139,11 +143,15 @@ namespace Backend.Controllers.v2 {
             var options = JWTEncryption.GetJWTSettings();
             options.ExpiredTime = 1 * 60 * 24 * 30;
 
+            var userlevel = u.PermissionRole?.Level;
+            userlevel ??= 0;
+
             var accessToken = JWTEncryption.Encrypt(new Dictionary<string, object>()
             {
                 { "UserId", u.Id },  // 存储Id
                 { "UserNickname",u. Nickname}, // 存储用户昵称
-				{ "userRole", u.Role}
+				{ "userRole", u.Role},
+                { "userLevel",  userlevel}
             });
 
             // 获取刷新 token

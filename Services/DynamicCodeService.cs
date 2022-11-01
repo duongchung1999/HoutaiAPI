@@ -24,7 +24,7 @@ namespace Backend.Services {
         /// 获取某个机型的动态码
         /// </summary>
         /// <param name="modelId"></param>
-        /// <returns></returns>
+        /// <returns></returns>s
         public async Task<DynamicCode> GetByModelId(int modelId) {
             return await repository.FirstOrDefaultAsync(e => e.ModelId == modelId);
         }
@@ -50,7 +50,7 @@ namespace Backend.Services {
         /// <summary>
         /// 删除过期的动态码
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns> 
         public async Task DeleteExpiredCode() {
             await repository.Context.DeleteRangeAsync<DynamicCode>(e => e.ExpireDate < DateTime.Now);
         }
