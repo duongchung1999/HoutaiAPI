@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DiffMatchPatch;
 
 namespace Backend.Services {
     public class ModelService {
@@ -31,17 +30,21 @@ namespace Backend.Services {
         }
 
         public async Task<EntityEntry<Model>> Delete(Model m) {
+            var partNoConfigService = new PartNoConfigService(Db.GetRepository<PartNoConfig>());
+            await partNoConfigService.Clear(m.Id);
+
+            var result = await m.DeleteNowAsync();
             await ActionRecordService.Add(ActionRecord.ActionOptions.DELETE_MODEL, ActionRecordService.CreateDiffTextStyle(m.Name, ""));
-            return await m.DeleteNowAsync();
+            return result;
         }
 
         public async Task<Model> Get(string modelName) {
-            var reuslt = await repository.Entities.AsNoTracking().SingleOrDefaultAsync(e => e.Name.Equals(modelName));
+            var result = await repository.Entities.AsNoTracking().SingleOrDefaultAsync(e => e.Name.Equals(modelName));
 
             //var dynamicCode = dynamicCodeService.GetByModelId(reuslt.Id);
             //reuslt.
 
-            return reuslt;
+            return result;
         }
         
         public async Task<Model> Get(int id = 0) {
@@ -50,9 +53,8 @@ namespace Backend.Services {
 
         public async Task<List<Model>> GetCollection(User user) {
             var result = repository.AsQueryable(false);
-            var role = user.Role;
 
-            if ((role & UserRoleOptions.ADMIN) == 0) {
+            if ((user.PermissionRole.Level <= 7)) {
                 var userModels = await UserModelService.GetList(user.Id);
                 var modelIds = userModels.Select(e => e.ModelId).ToList();
                 result = result.Where(e => modelIds.Contains(e.Id) || e.CreatorId == user.Id);
@@ -75,7 +77,7 @@ namespace Backend.Services {
             }
 
             if (oldPNConfigTemplate != m.PnConfigTemplate) {
-                await ActionRecordService.Add("更新机型模板配置", $"[{m.Name}] {ActionRecordService.CreateDiffTextStyle(oldPNConfigTemplate, m.PnConfigTemplate)}");
+                await ActionRecordService.Add("更新机型的料号配置模板", $"[{m.Name}] {ActionRecordService.CreateDiffTextStyle(oldPNConfigTemplate, m.PnConfigTemplate)}");
             }
 
             return m;

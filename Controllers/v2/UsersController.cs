@@ -39,8 +39,9 @@ namespace Backend.Controllers.v2 {
         public async Task<User> Add(User u) {
             if (string.IsNullOrEmpty(u.Nickname)) throw Oops.Oh("昵称不能为空");
             if (string.IsNullOrEmpty(u.Username)) throw Oops.Oh("用户名不能为空");
+            //if (u.PermissionRole == null) throw Oops.Oh("请分配一个权限角色");
 
-            u.Role = UserRoleOptions.NONE;
+            //u.Role = UserRoleOptions.NONE;
             var result = await service.Add(u);
             SetToken2Header(result);
 
@@ -110,7 +111,7 @@ namespace Backend.Controllers.v2 {
         /// 更新用户
         /// </summary>
         /// <param name="u">u</param>
-        /// <returns></returns>
+        /// <returns></returns> 
         [Authorize]
         public async Task<User> Update(User u) {
             //JwtHandler.HasRoles(UserRoleOptions.ADMIN);
@@ -118,6 +119,17 @@ namespace Backend.Controllers.v2 {
             var result = await service.UpdateUser(u);
             return result;
         }
+        
+        /// <summary>
+        /// 更新用户的语言选项
+        /// </summary>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateUserLang(string lang) {
+            var nowUser = JwtHandler.GetNowUser();
+            return await service.UpdateUserLang(nowUser.Id, lang);
+        }
+
         /// <summary>
         /// 修改自己账号的密码
         /// </summary>
@@ -150,7 +162,7 @@ namespace Backend.Controllers.v2 {
             {
                 { "UserId", u.Id },  // 存储Id
                 { "UserNickname",u. Nickname}, // 存储用户昵称
-				{ "userRole", u.Role},
+				//{ "userRole", u.Role},
                 { "userLevel",  userlevel}
             });
 

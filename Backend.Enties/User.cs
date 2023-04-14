@@ -47,11 +47,17 @@ namespace Backend.Enties {
         /// </summary>
         //[Required(ErrorMessage = "密码不能为空")]
         public string Password { get; set; }
+
         /// <summary>
-        /// 权限角色
+        /// 用户使用的语言
         /// </summary>
-        [Column("user_role")]
-        public UserRoleOptions Role { get; set; }
+        public string Lang { get; set; }
+      
+        ///// <summary>
+        ///// 权限角色
+        ///// </summary>
+        //[Column("user_role")]
+        //public UserRoleOptions Role { get; set; }
 
         [Column("role_id")]
         public int RoleId { get; set; }
@@ -70,8 +76,8 @@ namespace Backend.Enties {
         public void Configure(EntityTypeBuilder<User> entityBuilder, DbContext dbContext, Type dbContextLocator) {
             entityBuilder.HasKey(e => e.Id);
             //entityBuilder.HasMany(e => e.ModelPermissions).WithOne(e => e.User).HasForeignKey(e => e.UserId);
-            entityBuilder.Property(e => e.Role)
-                .HasConversion(v => (int)v, v => (UserRoleOptions)v);
+            //entityBuilder.Property(e => e.Role)
+            //    .HasConversion(v => (int)v, v => (UserRoleOptions)v);
         }
     }
 }

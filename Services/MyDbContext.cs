@@ -20,7 +20,11 @@ namespace Backend.Services {
     [AppDbContext("Server=localhost;database=te_test;uid=root;pwd=root;AllowLoadLocalInfile=true;", DbProvider.MySql)]
 #else
     // MES服务器
-    [AppDbContext("Server=10.55.2.20;database=te_test;uid=merryte;pwd=merry@TE;AllowLoadLocalInfile=true;", DbProvider.MySql)]
+     [AppDbContext("Server=10.55.2.20;database=te_test;uid=merryte;pwd=merry@TE;AllowLoadLocalInfile=true;", DbProvider.MySql)]
+    
+    // 越南数据库地址 
+    //[AppDbContext("Server=10.175.5.59;database=te_test;uid=merryte;pwd=merry@TE;AllowLoadLocalInfile=true;", DbProvider.MySql)]
+
 #endif
     public class MyDbContext : AppDbContext<MyDbContext> {  
 

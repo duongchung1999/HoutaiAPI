@@ -40,7 +40,7 @@ namespace Backend.Enties {
     
     
     /// <summary>
-    /// 机型
+    /// 权限角色
     /// </summary>
     [Table("role")]
     public class Role : IEntity, IEntityTypeBuilder<Role> {

@@ -36,5 +36,10 @@ namespace Backend.Services {
         public async Task Delete(int id) {
             await repository.DeleteNowAsync(id);
         }
+
+        public async Task<Role> Get(int id) { 
+           var ret = await repository.FindOrDefaultAsync(id);
+            return ret;
+        }
     }
 }

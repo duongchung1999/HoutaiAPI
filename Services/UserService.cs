@@ -22,18 +22,18 @@ namespace Backend.Services {
 
         public async Task<User> Add(User u) {
             u.Password = Md5(u.Password);
-            await u.InsertNowAsync();
-
             var role = await roleService.GetById(u.RoleId);
-            u.Password = "";
             u.PermissionRole = role;
-            return u;
+
+            await u.InsertNowAsync();
+            return await Get(u.Id);
         }
 
         public async Task<User> Login(User u) {
             var pwd = Md5(u.Password);
-            var result = await repository.FirstOrDefaultAsync(e => e.Username == (u.Username) && e.Password.Equals(pwd));
-            return result;
+            var isExist = await repository.AnyAsync(e => e.Username == (u.Username) && e.Password.Equals(pwd));
+            if (!isExist) return null;
+            return await Get(u.Username);
         }
 
         public async Task<User> Get(int id) {
@@ -45,14 +45,15 @@ namespace Backend.Services {
             return new User() {
                 Id = result.Id,
                 Nickname = result.Nickname,
-                Role = result.Role,
+                //Role = result.Role,
                 PermissionRole = role,
                 RoleId = result.RoleId,
+                Lang = result.Lang
             };
         }
 
-        public async Task<User> Get(string nickname) {
-            var user = await repository.SingleOrDefaultAsync(e => e.Username == nickname);
+        public async Task<User> Get(string username) {
+            var user = await repository.SingleOrDefaultAsync(e => e.Username == username);
             if (user == null) return null;
             return await Get(user.Id);
         }
@@ -71,8 +72,9 @@ namespace Backend.Services {
                     Username = e.Username,
                     Id = e.Id,
                     Nickname = e.Nickname,
-                    Role = e.Role,
+                    //Role = e.Role,
                     RoleId = e.RoleId,
+                    Lang = e.Lang
                 })
                 .ToPagedListAsync(filte.Page, filte.Size);
 
@@ -120,6 +122,16 @@ namespace Backend.Services {
 
             var result = await u.DeleteNowAsync();
             return result.Entity;
+        }
+
+        public async Task<bool> UpdateUserLang(int userId, string lang) {
+            var user = await repository.FindOrDefaultAsync(userId);
+            if (user == null) { return false; }
+
+            user.Lang = lang;
+            await user.UpdateNowAsync();
+            return true;
+
         }
 
         /// <summary>
