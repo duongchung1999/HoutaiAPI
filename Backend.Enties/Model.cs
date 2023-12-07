@@ -41,6 +41,11 @@ namespace Backend.Enties {
         public string PnConfigTemplate { get; set; }
 
         /// <summary>
+		/// Config Model
+		/// </summary>
+		public string Config { get; set; }
+
+        /// <summary>
         /// 动态码Id
         /// </summary>
         //[Column("dynamic_code_id")]

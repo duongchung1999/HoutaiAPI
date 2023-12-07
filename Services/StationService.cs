@@ -20,8 +20,9 @@ namespace Backend.Services {
         }
 
         public async Task<EntityEntry<Station>> Add(Station s) {
-            var result = await s.InsertNowAsync();
             var model = await modelService.Get(s.ModelId);
+            s.Config = (!string.IsNullOrEmpty(model.Config) ? model.Config : null);
+            var result = await s.InsertNowAsync();
             await ActionRecordService.Add(ActionRecord.ActionOptions.ADD_STATION, $"[{model.Name}] {ActionRecordService.CreateDiffTextStyle("", s.Name)}" );
 
             return result;
