@@ -50,6 +50,12 @@ namespace Backend.Enties.PublicTestItem {
         [Column("method_id")]
         public int MethodId { get; set; }
 
+        /// <summary>
+        /// 默认值
+        /// </summary>
+        [Column("default_value")]
+        public string DefaultValue { get; set; }
+
         public void Configure(EntityTypeBuilder<PublicTestItemParam> entityBuilder, DbContext dbContext, Type dbContextLocator) {
            entityBuilder.HasKey(t => t.Id);
         }
